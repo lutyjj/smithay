@@ -1703,10 +1703,8 @@ impl X11Surface {
     }
 
     fn update_opacity(&self) -> Result<(), ConnectionError> {
-        if let Some(opacity) = self.read_window_property_u32(self.atoms._NET_WM_WINDOW_OPACITY)? {
-            let mut state = self.state.lock().unwrap();
-            state.opacity = Some(opacity);
-        }
+        let opacity = self.read_window_property_u32(self.atoms._NET_WM_WINDOW_OPACITY)?;
+        self.state.lock().unwrap().opacity = opacity;
         Ok(())
     }
 
